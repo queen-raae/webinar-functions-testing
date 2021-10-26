@@ -1,6 +1,6 @@
 # Gatsby Timeship
 
-Used as a demo in the webinar [A practical introduction to Gatsby Functions](https://www.crowdcast.io/e/a-practical-introduction) you may watch at your convenience.
+Used as a demo in the webinar [Testing your Gatsby Functions](https://www.crowdcast.io/e/testing-your-functions) you may watch at your convenience.
 
 ## 🚀 Quick start (from Gatsby)
 
