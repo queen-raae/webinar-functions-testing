@@ -1,3 +1,6 @@
 export default function handler(req, res) {
-  res.send("You time-travelled to Frankfurt, in the year 2021");
+  const { city } = req.body;
+  const { year } = req.body;
+
+  res.send(`You time-traveled to ${city}, in the year ${year}`);
 }
