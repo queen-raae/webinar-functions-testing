@@ -131,6 +131,7 @@ describe("time-travel.js", () => {
       const req = {
         body: {
           year: testYear,
+          city: 1000,
         },
       };
 
@@ -158,6 +159,45 @@ describe("time-travel.js", () => {
 
       it("sends a 500 status code", () => {
         expect(mockStatus).toHaveBeenCalledWith(500);
+      });
+    });
+
+    describe("handles undefined parameters", () => {
+      const testYear = "2026";
+      const testCity = "Oslo";
+
+      const req = {
+        body: {
+          year: testYear,
+        },
+      };
+
+      const res = {
+        send: mockSend,
+        json: mockJson,
+        status: mockStatus,
+      };
+
+      beforeAll(() => {
+        handler(req, res);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it("logs a console warning", () => {
+        expect(mockConsoleWarn).toHaveBeenCalled();
+      });
+
+      it("sends an json object with a message about that error to the use", () => {
+        expect(mockJson).toHaveBeenCalledWith({
+          message: "Invalid body params",
+        });
+      });
+
+      it("sends a 422 status code", () => {
+        expect(mockStatus).toHaveBeenCalledWith(422);
       });
     });
   });
