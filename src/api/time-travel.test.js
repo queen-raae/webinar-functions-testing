@@ -25,7 +25,7 @@ describe("time-travel.js", () => {
     handler(req, res);
 
     expect(mockSend).toHaveBeenCalledWith(
-      `You time-traveled to ${testCity}, in the year ${testYear}`
+      `You time-traveled to ${testCity}, in the year ${testYear}, where you did NOT find the princess!`
     );
   });
 });
