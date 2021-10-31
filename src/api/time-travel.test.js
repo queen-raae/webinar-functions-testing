@@ -30,6 +30,28 @@ describe("time-travel.js", () => {
       );
     });
 
+    it("does  NOT find the princess in Oslo 2021", async () => {
+      const testYear = "2021";
+      const testCity = "Oslo";
+
+      const req = {
+        body: {
+          year: testYear,
+          city: testCity,
+        },
+      };
+
+      const res = {
+        send: mockSend,
+      };
+
+      handler(req, res);
+
+      expect(mockSend).toHaveBeenCalledWith(
+        `You time-traveled to ${testCity}, in the year ${testYear}, where you did NOT find the princess!`
+      );
+    });
+
     it("does not find the princess in Barcelona 1997", async () => {
       const testYear = "1997";
       const testCity = "Barcelona";
