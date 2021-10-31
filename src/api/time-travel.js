@@ -7,15 +7,21 @@ export default function handler(req, res) {
   let message = `You time-traveled to ${city}, in the year ${year}, `;
 
   try {
-    if (
-      city.trim().toUpperCase() === CORRECT_CITY &&
-      year.trim() === CORRECT_YEAR
-    ) {
-      message += `where you found the princess!`;
+    if (year && city) {
+      if (
+        city.trim().toUpperCase() === CORRECT_CITY &&
+        year.trim() === CORRECT_YEAR
+      ) {
+        message += `where you found the princess!`;
+      } else {
+        message += `where you did NOT find the princess!`;
+      }
+      res.send(message);
     } else {
-      message += `where you did NOT find the princess!`;
+      const errorMessage = "Invalid body params";
+      console.warn(errorMessage);
+      res.status(422).json({ message: errorMessage });
     }
-    res.send(message);
   } catch (error) {
     console.warn(error.message);
     res.status(500).json({ message: "Faulty TimeShip!" });
