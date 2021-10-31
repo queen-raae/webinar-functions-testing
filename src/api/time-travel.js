@@ -6,13 +6,18 @@ export default function handler(req, res) {
 
   let message = `You time-traveled to ${city}, in the year ${year}, `;
 
-  if (
-    city.trim().toUpperCase() === CORRECT_CITY &&
-    year.trim() === CORRECT_YEAR
-  ) {
-    message += `where you found the princess!`;
-  } else {
-    message += `where you did NOT find the princess!`;
+  try {
+    if (
+      city.trim().toUpperCase() === CORRECT_CITY &&
+      year.trim() === CORRECT_YEAR
+    ) {
+      message += `where you found the princess!`;
+    } else {
+      message += `where you did NOT find the princess!`;
+    }
+    res.send(message);
+  } catch (error) {
+    console.warn(error.message);
+    res.status(500).json({ message: "Faulty TimeShip!" });
   }
-  res.send(message);
 }
