@@ -1,13 +1,17 @@
 import handler from "./time-travel.js";
 
 const mockSend = jest.fn();
+const mockJson = jest.fn();
+const mockStatus = jest.fn().mockReturnThis();
+
+const mockConsoleWarn = jest.fn();
+jest.spyOn(global.console, "warn").mockImplementation(mockConsoleWarn);
 
 describe("time-travel.js", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe("checks if it finds the princess in specific year and city", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
     it("does find the princess in Oslo 2026", async () => {
       const testYear = "2026";
       const testCity = "Oslo";
@@ -116,6 +120,45 @@ describe("time-travel.js", () => {
       expect(mockSend).toHaveBeenCalledWith(
         `You time-traveled to ${testCity}, in the year ${testYear}, where you did NOT find the princess!`
       );
+    });
+  });
+
+  describe("handles error", () => {
+    describe("handles an unexpected error", () => {
+      const testYear = "2026";
+      const testCity = "Oslo";
+
+      const req = {
+        body: {
+          year: testYear,
+        },
+      };
+
+      const res = {
+        send: mockSend,
+        json: mockJson,
+        status: mockStatus,
+      };
+
+      beforeAll(() => {
+        handler(req, res);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it("logs a console warning", () => {
+        expect(mockConsoleWarn).toHaveBeenCalled();
+      });
+
+      it("sends an json object with a message about that error to the use", () => {
+        expect(mockJson).toHaveBeenCalledWith({ message: "Faulty TimeShip!" });
+      });
+
+      it("sends a 500 status code", () => {
+        expect(mockStatus).toHaveBeenCalledWith(500);
+      });
     });
   });
 });
