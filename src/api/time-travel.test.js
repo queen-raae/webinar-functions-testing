@@ -30,6 +30,50 @@ describe("time-travel.js", () => {
       );
     });
 
+    it("does find the princess in oslo 2026", async () => {
+      const testYear = "2026";
+      const testCity = "Oslo";
+
+      const req = {
+        body: {
+          year: testYear,
+          city: testCity,
+        },
+      };
+
+      const res = {
+        send: mockSend,
+      };
+
+      handler(req, res);
+
+      expect(mockSend).toHaveBeenCalledWith(
+        `You time-traveled to ${testCity}, in the year ${testYear}, where you found the princess!`
+      );
+    });
+
+    it("does find the princess in OSlo 2026", async () => {
+      const testYear = "2026";
+      const testCity = "Oslo";
+
+      const req = {
+        body: {
+          year: testYear,
+          city: testCity,
+        },
+      };
+
+      const res = {
+        send: mockSend,
+      };
+
+      handler(req, res);
+
+      expect(mockSend).toHaveBeenCalledWith(
+        `You time-traveled to ${testCity}, in the year ${testYear}, where you found the princess!`
+      );
+    });
+
     it("does  NOT find the princess in Oslo 2021", async () => {
       const testYear = "2021";
       const testCity = "Oslo";
