@@ -7,15 +7,25 @@ describe("time-travel.js", () => {
     jest.clearAllMocks();
   });
 
-  it("sends a message to the user", async () => {
+  it("does not find the princess in Barcelona 1997", async () => {
+    const testYear = "1997";
+    const testCity = "Barcelona";
+
+    const req = {
+      body: {
+        year: testYear,
+        city: testCity,
+      },
+    };
+
     const res = {
       send: mockSend,
     };
 
-    handler("", res);
+    handler(req, res);
 
     expect(mockSend).toHaveBeenCalledWith(
-      "You time-travelled to Frankfurt, in the year 2021"
+      `You time-traveled to ${testCity}, in the year ${testYear}`
     );
   });
 });
